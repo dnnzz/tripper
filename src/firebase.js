@@ -64,7 +64,7 @@ export const createMatch = async (
   const snapshot = await matchRef.get();
   const userRef = firestore.doc(`users/${user}`);
   const likeRef = userRef.collection("userLiked");
-  const matchData = snapshot.forEach((doc) => {
+  snapshot.forEach((doc) => {
     matchArr.push({ id: doc.id, ...doc.data() });
   });
   const filtered = matchArr

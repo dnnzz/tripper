@@ -31,12 +31,10 @@ function MainScreen(props) {
     const [showModal, setModal] = useState(false);
     const [possibleMatches, setPossibleMatches] = useState([]);
     const user = useContext(UserContext);
-    const [userLiked, setUserLiked] = useState([]);
     const [userPref, setUserPref] = useState({
         gender: "",
         petFriendly: ""
     });
-    const [loading, setLoading] = useState(false);
     const calculateAge = (user) => {
         const birthDay = user.age.toDate();
         var today = new Date();
@@ -44,7 +42,6 @@ function MainScreen(props) {
         return difference.toFixed(0);
     }
     useEffect(() => {
-        setLoading(true);
         const getUserList = async () => {
             if (!user) return;
             const users = await firebase.firestore().collection('users');
@@ -54,7 +51,6 @@ function MainScreen(props) {
                 snapshot.forEach((doc) => {
                     likeDoc.push({ ...doc.data() });
                 })
-                setUserLiked(likeDoc || []);
             });
             users.get().then((querySnapshot) => {
                 const tempDoc = [];
@@ -67,7 +63,6 @@ function MainScreen(props) {
             })
         }
         getUserList();
-        setLoading(false);
     }, [user]);
     const updateUserPref = async (event) => {
         event.preventDefault();

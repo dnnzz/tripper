@@ -25,7 +25,7 @@ class SignUp extends Component {
         this.props.history.push("/createProfile");
       };
     render() {
-        const { displayName, email, password } = this.state;
+        const {email, password } = this.state;
         return (
             <div className="container">
                 <h1 className="text-center" style={{ color: "#54799B" }}>Kayıt Ol</h1>

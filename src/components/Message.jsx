@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { withRouter } from "react-router-dom";
-import { firestore, signOut, getOneMatchDoc, firebaseTimeStamp } from '../firebase';
+import { firestore, signOut, firebaseTimeStamp } from '../firebase';
 import Header from './Header';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { UserContext } from '../providers/UserProvider';
@@ -10,7 +10,6 @@ function Message(props) {
     const messagesRef = firestore.collection("matches").doc(id).collection("messages");
     const query = messagesRef.orderBy('createdAt').limit(25);
     const [messages] = useCollectionData(query, { idField: 'id' });
-    const [chatDetails, setChatDetails] = useState({});
     const [formValue, setFormValue] = useState('');
     const sendMessage = async (e) => {
         e.preventDefault();
@@ -24,9 +23,6 @@ function Message(props) {
         });
         setFormValue('');
     }
-    useEffect(() => {
-        getOneMatchDoc(id).then(data => setChatDetails(data));
-    }, []);
     return (
         <>
             <Header signOut={signOut} />
@@ -46,7 +42,7 @@ function Message(props) {
                                                 className="rounded-circle" />
                                             <div className="media-body ml-3">
                                                 <div className="bg-light rounded py-2 px-3 mb-2">
-                                                    <h5>{msg.senderDisplayName}</h5>
+                                                    <h5 style={{color:"black"}}>{msg.senderDisplayName}</h5>
                                                     <p key={msg.id}
                                                         className="text-small mb-0 text-muted">{msg.text}</p>
                                                 </div>

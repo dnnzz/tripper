@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { auth, firestore, storage , signOut } from '../firebase';
+import { auth, firestore, storage} from '../firebase';
 import DatePicker from 'react-date-picker';
 import {withRouter} from "react-router-dom";
 
@@ -46,7 +46,6 @@ class CreateProfile extends Component {
         }
 
         this.setState({displayName:"",userType:"",age:"",gender:"",city:""});
-        //signOut();
         this.props.history.push("/mainPage");
 
     }

@@ -28,8 +28,7 @@ function Messages(props) {
                         ])
                 })
             });
-    }, []);
-    const item = "https://www.google.com";
+    }, [user.uid]);
     return (
         <>
         <Header signOut={signOut} />

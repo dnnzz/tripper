@@ -13,7 +13,7 @@ function Matches(props) {
 
         getLikedCurrUserDoc(user.uid)
             .then(data => setLikedDoc(data));
-    }, []);
+    }, [user.uid]);
 
     return (
         <>
