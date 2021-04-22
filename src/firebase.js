@@ -133,6 +133,7 @@ export const getOneMatchDoc = async (id) =>{
   var snapshot = await matchRef.get();
   return snapshot.data();
 }
+export const firebaseTimeStamp = () => firebase.firestore.FieldValue.serverTimestamp();
 
 export const getLikedCurrUserDoc = async (user) => {
   const matchArr = [];
