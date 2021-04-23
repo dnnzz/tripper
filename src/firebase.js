@@ -105,27 +105,31 @@ export const createMatch = async (
   }
 };
 export const getMatchDoc = async (user) => {
-  const matchArr = [];
+  var matchArr = [];
+  var matchArr1= [];
   const matchesRef = firestore
     .collection("matches")
     .where("user", "==", user)
     .where("matchStatus", "==", true);
   var snapshot = await matchesRef.get();
-  if (snapshot.empty) {
+  snapshot.forEach((doc) => {
+    matchArr.push({ id: doc.id, data: doc.data() });
+  });
+  if (snapshot) {
     const matchesRef1 = firestore
       .collection("matches")
       .where("user1", "==", user)
       .where("matchStatus", "==", true);
     snapshot = await matchesRef1.get();
+    if(snapshot.empty){
+      return matchArr;
+    }
     snapshot.forEach((doc) => {
-      matchArr.push({ id: doc.id, data: doc.data() });
+      matchArr1.push({ id: doc.id, data: doc.data() });
     });
-    return matchArr;
+    const mergedMatchDoc = matchArr.concat(matchArr1);
+    return mergedMatchDoc;
   }
-  snapshot.forEach((doc) => {
-    matchArr.push({ id: doc.id, data: doc.data() });
-  });
-  return matchArr;
 };
 
 export const getOneMatchDoc = async (id) =>{
