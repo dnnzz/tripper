@@ -113,6 +113,7 @@ class CreateProfile extends Component {
                                             style={{ backgroundColor: "transparent", backgroundRepeat: "none", border: "none", cursor: "pointer", overflow: "hidden", outline: "none" }}
                                         >
                                             <img
+                                                value="female"
                                                 width="50"
                                                 height="50"
                                                 alt="female"
@@ -127,6 +128,7 @@ class CreateProfile extends Component {
                                             style={{ backgroundColor: "transparent", backgroundRepeat: "none", border: "none", cursor: "pointer", overflow: "hidden", outline: "none" }}
                                         >
                                             <img
+                                                value="male"
                                                 className="ml-5"
                                                 width="50"
                                                 height="50"

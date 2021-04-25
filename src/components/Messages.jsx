@@ -33,6 +33,7 @@ function Messages(props) {
                 const finalTmpArr = [...tempMsgArr,...tempMsgArr1];
                 setMessageDoc(finalTmpArr);
             });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user.uid]);
     return (
         <>
