@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { withRouter } from "react-router-dom";
 import { firestore, signOut, firebaseTimeStamp } from '../firebase';
 import Header from './Header';
@@ -68,21 +68,31 @@ function Message(props) {
     const id = props.match.params.id;
     const user = useContext(UserContext);
     const messagesRef = firestore.collection("matches").doc(id).collection("messages");
-    const query = messagesRef.orderBy('createdAt').limit(25);
+    const query = useMemo(() => {
+        const messagesRef = firestore.collection("matches").doc(id).collection("messages");
+        const query = messagesRef.orderBy('createdAt').limit(25);
+        return query;
+    }, [id]);
     const [messages] = useCollectionData(query, { idField: 'id' });
     const [formValue, setFormValue] = useState('');
     const sendMessage = async (e) => {
         e.preventDefault();
         const { uid, photoUrl, displayName } = user;
-        await messagesRef.add({
+        messagesRef.add({
             text: formValue,
-            createdAt: firebaseTimeStamp(),
+            createdAt: new Date(),
             senderId: uid,
             senderPhotoUrl: photoUrl,
             senderDisplayName: displayName
-        });
+        }).then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+        })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+            });
         setFormValue('');
     }
+    console.log(messages);
 
     return (
         <>
